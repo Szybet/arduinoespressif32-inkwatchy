@@ -1,3 +1,3 @@
 #pragma once
 #include "NetworkClient.h"
-typedef NetworkClient WiFiClient;
+#define WiFiClient NetworkClient

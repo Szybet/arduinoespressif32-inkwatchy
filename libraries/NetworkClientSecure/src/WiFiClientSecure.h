@@ -1,3 +1,3 @@
 #pragma once
 #include "NetworkClientSecure.h"
-typedef NetworkClientSecure WiFiClientSecure;
+#define WiFiClientSecure NetworkClientSecure

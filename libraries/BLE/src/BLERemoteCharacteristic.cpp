@@ -297,7 +297,7 @@ void BLERemoteCharacteristic::retrieveDescriptors() {
     // We now have a new characteristic ... let us add that to our set of known characteristics
     BLERemoteDescriptor *pNewRemoteDescriptor = new BLERemoteDescriptor(result.handle, BLEUUID(result.uuid), this);
 
-    m_descriptorMap.insert(std::pair<std::string, BLERemoteDescriptor *>(pNewRemoteDescriptor->getUUID().toString().c_str(), pNewRemoteDescriptor));
+    m_descriptorMap.insert(std::pair<String, BLERemoteDescriptor *>(pNewRemoteDescriptor->getUUID().toString(), pNewRemoteDescriptor));
 
     offset++;
   }  // while true
@@ -308,7 +308,7 @@ void BLERemoteCharacteristic::retrieveDescriptors() {
 /**
  * @brief Retrieve the map of descriptors keyed by UUID.
  */
-std::map<std::string, BLERemoteDescriptor *> *BLERemoteCharacteristic::getDescriptors() {
+std::map<String, BLERemoteDescriptor *> *BLERemoteCharacteristic::getDescriptors() {
   return &m_descriptorMap;
 }  // getDescriptors
 
@@ -329,7 +329,7 @@ uint16_t BLERemoteCharacteristic::getHandle() {
  */
 BLERemoteDescriptor *BLERemoteCharacteristic::getDescriptor(BLEUUID uuid) {
   log_v(">> getDescriptor: uuid: %s", uuid.toString().c_str());
-  std::string v = uuid.toString().c_str();
+  String v = uuid.toString();
   for (auto &myPair : m_descriptorMap) {
     if (myPair.first == v) {
       log_v("<< getDescriptor: found");
