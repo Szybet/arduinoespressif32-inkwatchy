@@ -460,7 +460,7 @@ SECTIONS
     *(.gnu.linkonce.s2.*)
     *(.jcr)
 
-    *(EXCLUDE_FILE(*libble_app.a *libbt.a *libbtdm_app.a *libnimble.a) .data EXCLUDE_FILE(*libble_app.a *libbt.a *libbtdm_app.a *libnimble.a) .data.*)
+    *(EXCLUDE_FILE(*libbt.a *libbtdm_app.a) .data EXCLUDE_FILE(*libbt.a *libbtdm_app.a) .data.*)
     *(.dram1 .dram1.*)
     _coredump_dram_start = ABSOLUTE(.);
     *(.dram2.coredump .dram2.coredump.*)
@@ -469,20 +469,15 @@ SECTIONS
     *libapp_trace.a:app_trace_util.*(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
     *libapp_trace.a:port_uart.*(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
     . = ALIGN(4);
-    _bt_controller_data_start = ABSOLUTE(.);
-    *libble_app.a:(.data .data.*)
-    . = ALIGN(4);
-    _bt_controller_data_end = ABSOLUTE(.);
-    . = ALIGN(4);
     _bt_data_start = ABSOLUTE(.);
     *libbt.a:(.data .data.*)
     . = ALIGN(4);
     _bt_data_end = ABSOLUTE(.);
     . = ALIGN(4);
-    _btdm_data_start = ABSOLUTE(.);
+    _bt_controller_data_start = ABSOLUTE(.);
     *libbtdm_app.a:(.data .data.*)
     . = ALIGN(4);
-    _btdm_data_end = ABSOLUTE(.);
+    _bt_controller_data_end = ABSOLUTE(.);
     *libc.a:creat.*(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
     *libc.a:isatty.*(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
     *libc.a:lib_a-abs.*(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
@@ -628,11 +623,6 @@ SECTIONS
     *libnewlib.a:assert.*(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
     *libnewlib.a:heap.*(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
     *libnewlib.a:stdatomic.*(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
-    . = ALIGN(4);
-    _nimble_data_start = ABSOLUTE(.);
-    *libnimble.a:(.data .data.*)
-    . = ALIGN(4);
-    _nimble_data_end = ABSOLUTE(.);
     *libphy.a:(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
     *libsoc.a:lldesc.*(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
     *libspi_flash.a:flash_brownout_hook.*(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
@@ -692,20 +682,10 @@ SECTIONS
     . = ALIGN (8);
     _bss_start = ABSOLUTE(.);
 
-    *(EXCLUDE_FILE(*libble_app.a *libbt.a *libbtdm_app.a *libnimble.a) .bss EXCLUDE_FILE(*libble_app.a *libbt.a *libbtdm_app.a *libnimble.a) .bss.*)
+    *(EXCLUDE_FILE(*libbt.a *libbtdm_app.a) .bss EXCLUDE_FILE(*libbt.a *libbtdm_app.a) .bss.*)
     *(.dynbss .dynsbss .gnu.linkonce.b .gnu.linkonce.b.* .gnu.linkonce.sb .gnu.linkonce.sb.* .gnu.linkonce.sb2 .gnu.linkonce.sb2.* .sbss .sbss.* .sbss2 .sbss2.* .scommon .share.mem)
     *(.ext_ram.bss .ext_ram.bss.*)
-    *(EXCLUDE_FILE(*libble_app.a *libbt.a *libbtdm_app.a *libnimble.a) COMMON)
-    . = ALIGN(4);
-    _bt_controller_bss_start = ABSOLUTE(.);
-    *libble_app.a:(.bss .bss.*)
-    . = ALIGN(4);
-    _bt_controller_bss_end = ABSOLUTE(.);
-    . = ALIGN(4);
-    _bt_controller_common_start = ABSOLUTE(.);
-    *libble_app.a:(COMMON)
-    . = ALIGN(4);
-    _bt_controller_common_end = ABSOLUTE(.);
+    *(EXCLUDE_FILE(*libbt.a *libbtdm_app.a) COMMON)
     . = ALIGN(4);
     _bt_bss_start = ABSOLUTE(.);
     *libbt.a:(.bss .bss.*)
@@ -717,25 +697,15 @@ SECTIONS
     . = ALIGN(4);
     _bt_common_end = ABSOLUTE(.);
     . = ALIGN(4);
-    _btdm_bss_start = ABSOLUTE(.);
+    _bt_controller_bss_start = ABSOLUTE(.);
     *libbtdm_app.a:(.bss .bss.*)
     . = ALIGN(4);
-    _btdm_bss_end = ABSOLUTE(.);
+    _bt_controller_bss_end = ABSOLUTE(.);
     . = ALIGN(4);
-    _btdm_common_start = ABSOLUTE(.);
+    _bt_controller_common_start = ABSOLUTE(.);
     *libbtdm_app.a:(COMMON)
     . = ALIGN(4);
-    _btdm_common_end = ABSOLUTE(.);
-    . = ALIGN(4);
-    _nimble_bss_start = ABSOLUTE(.);
-    *libnimble.a:(.bss .bss.*)
-    . = ALIGN(4);
-    _nimble_bss_end = ABSOLUTE(.);
-    . = ALIGN(4);
-    _nimble_common_start = ABSOLUTE(.);
-    *libnimble.a:(COMMON)
-    . = ALIGN(4);
-    _nimble_common_end = ABSOLUTE(.);
+    _bt_controller_common_end = ABSOLUTE(.);
 
     . = ALIGN (8);
     _bss_end = ABSOLUTE(.);
@@ -862,7 +832,7 @@ SECTIONS
     *libdriver.a:gptimer.*(.literal.gptimer_del_timer .literal.gptimer_destroy .literal.gptimer_disable .literal.gptimer_enable .literal.gptimer_get_captured_count .literal.gptimer_get_raw_count .literal.gptimer_get_resolution .literal.gptimer_new_timer .literal.gptimer_register_event_callbacks .literal.gptimer_release_group_handle .literal.gptimer_set_alarm_action .literal.gptimer_set_raw_count .literal.gptimer_start .literal.gptimer_stop .text .text.gptimer_del_timer .text.gptimer_destroy .text.gptimer_disable .text.gptimer_enable .text.gptimer_get_captured_count .text.gptimer_get_raw_count .text.gptimer_get_resolution .text.gptimer_new_timer .text.gptimer_register_event_callbacks .text.gptimer_release_group_handle .text.gptimer_set_alarm_action .text.gptimer_set_raw_count .text.gptimer_start .text.gptimer_stop)
     *libesp_event.a:default_event_loop.*(.literal.esp_event_handler_instance_register .literal.esp_event_handler_instance_unregister .literal.esp_event_handler_register .literal.esp_event_handler_unregister .literal.esp_event_loop_create_default .literal.esp_event_loop_delete_default .literal.esp_event_post .text .text.esp_event_handler_instance_register .text.esp_event_handler_instance_unregister .text.esp_event_handler_register .text.esp_event_handler_unregister .text.esp_event_loop_create_default .text.esp_event_loop_delete_default .text.esp_event_post)
     *libesp_event.a:esp_event.*(.literal.base_node_add_handler .literal.esp_event_handler_instance_register_with .literal.esp_event_handler_instance_unregister_with .literal.esp_event_handler_register_with .literal.esp_event_handler_register_with_internal .literal.esp_event_handler_unregister_with .literal.esp_event_handler_unregister_with_internal .literal.esp_event_loop_create .literal.esp_event_loop_delete .literal.esp_event_loop_run .literal.esp_event_loop_run_task .literal.esp_event_post_to .literal.handler_instances_add .literal.handler_instances_remove .literal.handler_instances_remove_all .literal.loop_node_add_handler .text .text.base_node_add_handler .text.esp_event_dump .text.esp_event_handler_instance_register_with .text.esp_event_handler_instance_unregister_with .text.esp_event_handler_register_with .text.esp_event_handler_register_with_internal .text.esp_event_handler_unregister_with .text.esp_event_handler_unregister_with_internal .text.esp_event_loop_create .text.esp_event_loop_delete .text.esp_event_loop_run .text.esp_event_loop_run_task .text.esp_event_post_to .text.handler_instances_add .text.handler_instances_remove .text.handler_instances_remove_all .text.loop_node_add_handler)
-    *libesp_hw_support.a:cpu.*(.literal.esp_cpu_intr_get_desc .literal.esp_cpu_set_watchpoint .text .text.esp_cpu_clear_breakpoint .text.esp_cpu_clear_watchpoint .text.esp_cpu_intr_get_desc .text.esp_cpu_set_breakpoint .text.esp_cpu_set_watchpoint)
+    *libesp_hw_support.a:cpu.*(.literal.esp_cpu_set_watchpoint .text .text.esp_cpu_clear_breakpoint .text.esp_cpu_clear_watchpoint .text.esp_cpu_set_breakpoint .text.esp_cpu_set_watchpoint)
     *libesp_hw_support.a:esp_gpio_reserve.*(.text)
     *libesp_hw_support.a:sar_periph_ctrl.*(.literal.s_sar_power_acquire .literal.s_sar_power_release .literal.sar_periph_ctrl_adc_continuous_power_acquire .literal.sar_periph_ctrl_adc_continuous_power_release .literal.sar_periph_ctrl_adc_oneshot_power_acquire .literal.sar_periph_ctrl_adc_oneshot_power_release .literal.sar_periph_ctrl_init .literal.sar_periph_ctrl_power_disable .literal.sar_periph_ctrl_pwdet_power_acquire .literal.sar_periph_ctrl_pwdet_power_release .text .text.s_sar_power_acquire .text.s_sar_power_release .text.sar_periph_ctrl_adc_continuous_power_acquire .text.sar_periph_ctrl_adc_continuous_power_release .text.sar_periph_ctrl_adc_oneshot_power_acquire .text.sar_periph_ctrl_adc_oneshot_power_release .text.sar_periph_ctrl_init .text.sar_periph_ctrl_power_disable .text.sar_periph_ctrl_pwdet_power_acquire .text.sar_periph_ctrl_pwdet_power_release)
     *libesp_system.a:esp_system_chip.*(.literal.esp_get_free_heap_size .literal.esp_get_free_internal_heap_size .literal.esp_get_idf_version .literal.esp_get_minimum_free_heap_size .text .text.esp_get_free_heap_size .text.esp_get_free_internal_heap_size .text.esp_get_idf_version .text.esp_get_minimum_free_heap_size)
@@ -871,7 +841,7 @@ SECTIONS
     *libhal.a:timer_hal.*(.literal.timer_hal_deinit .literal.timer_hal_init .text .text.timer_hal_deinit .text.timer_hal_init .text.timer_hal_set_counter_value)
     *libheap.a:multi_heap.*(.literal.multi_heap_check .literal.multi_heap_dump .literal.multi_heap_dump_tlsf .literal.multi_heap_get_info_impl .literal.multi_heap_register_impl .literal.tlsf_check_hook .text .text.multi_heap_check .text.multi_heap_dump .text.multi_heap_dump_tlsf .text.multi_heap_free_size_impl .text.multi_heap_get_info_impl .text.multi_heap_get_info_tlsf .text.multi_heap_minimum_free_size_impl .text.multi_heap_register_impl .text.tlsf_check_hook)
     *libheap.a:multi_heap_poisoning.*(.literal.multi_heap_free_size .literal.multi_heap_get_info .literal.multi_heap_minimum_free_size .literal.multi_heap_register .text .text.multi_heap_free_size .text.multi_heap_get_info .text.multi_heap_minimum_free_size .text.multi_heap_register)
-    *libheap.a:tlsf.*(.literal.default_walker .literal.integrity_walker .literal.tlsf_add_pool .literal.tlsf_check .literal.tlsf_check_pool .literal.tlsf_create .literal.tlsf_create_with_pool .literal.tlsf_remove_pool .literal.tlsf_walk_pool .text .text.default_walker .text.integrity_walker .text.tlsf_add_pool .text.tlsf_check .text.tlsf_check_pool .text.tlsf_create .text.tlsf_create_with_pool .text.tlsf_destroy .text.tlsf_fit_size .text.tlsf_pool_overhead .text.tlsf_remove_pool .text.tlsf_walk_pool)
+    *libheap.a:tlsf.*(.literal.default_walker .literal.integrity_walker .literal.tlsf_add_pool .literal.tlsf_check .literal.tlsf_check_pool .literal.tlsf_create .literal.tlsf_create_with_pool .literal.tlsf_fit_size .literal.tlsf_remove_pool .literal.tlsf_walk_pool .text .text.default_walker .text.integrity_walker .text.tlsf_add_pool .text.tlsf_check .text.tlsf_check_pool .text.tlsf_create .text.tlsf_create_with_pool .text.tlsf_destroy .text.tlsf_fit_size .text.tlsf_pool_overhead .text.tlsf_remove_pool .text.tlsf_walk_pool)
     *liblog.a:log.*(.literal.esp_log_level_get .literal.esp_log_level_set .literal.esp_log_set_vprintf .literal.esp_log_writev .literal.heap_bubble_down .literal.s_log_level_get_and_unlock .text .text.esp_log_level_get .text.esp_log_level_set .text.esp_log_set_vprintf .text.esp_log_writev .text.heap_bubble_down .text.s_log_level_get_and_unlock)
     *liblog.a:log_freertos.*(.literal.esp_log_system_timestamp .text .text.esp_log_system_timestamp)
 

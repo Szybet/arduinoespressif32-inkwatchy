@@ -331,7 +331,7 @@ SECTIONS
     *(.gnu.linkonce.s2.*)
     *(.jcr)
 
-    *(EXCLUDE_FILE(*libble_app.a *libbt.a *libbtdm_app.a *libnimble.a) .data EXCLUDE_FILE(*libble_app.a *libbt.a *libbtdm_app.a *libnimble.a) .data.*)
+    *(.data .data.*)
     *(.dram1 .dram1.*)
     _coredump_dram_start = ABSOLUTE(.);
     *(.dram2.coredump .dram2.coredump.*)
@@ -339,21 +339,6 @@ SECTIONS
     *libapp_trace.a:app_trace.*(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
     *libapp_trace.a:app_trace_util.*(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
     *libapp_trace.a:port_uart.*(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
-    . = ALIGN(4);
-    _bt_controller_data_start = ABSOLUTE(.);
-    *libble_app.a:(.data .data.*)
-    . = ALIGN(4);
-    _bt_controller_data_end = ABSOLUTE(.);
-    . = ALIGN(4);
-    _bt_data_start = ABSOLUTE(.);
-    *libbt.a:(.data .data.*)
-    . = ALIGN(4);
-    _bt_data_end = ABSOLUTE(.);
-    . = ALIGN(4);
-    _btdm_data_start = ABSOLUTE(.);
-    *libbtdm_app.a:(.data .data.*)
-    . = ALIGN(4);
-    _btdm_data_end = ABSOLUTE(.);
     *libesp_hw_support.a:esp_memory_utils.*(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
     *libesp_hw_support.a:pmu_sleep.*(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
     *libesp_hw_support.a:rtc_clk.*(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
@@ -383,11 +368,6 @@ SECTIONS
     *libnewlib.a:heap.*(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
     *libnewlib.a:port_stdatomic.*(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
     *libnewlib.a:stdatomic.*(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
-    . = ALIGN(4);
-    _nimble_data_start = ABSOLUTE(.);
-    *libnimble.a:(.data .data.*)
-    . = ALIGN(4);
-    _nimble_data_end = ABSOLUTE(.);
     *libphy.a:(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
     *libsoc.a:lldesc.*(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
     *libspi_flash.a:flash_brownout_hook.*(.rodata .rodata.* .sdata2 .sdata2.* .srodata .srodata.*)
@@ -426,50 +406,10 @@ SECTIONS
     . = ALIGN (8);
     _bss_start = ABSOLUTE(.);
 
-    *(EXCLUDE_FILE(*libble_app.a *libbt.a *libbtdm_app.a *libnimble.a) .bss EXCLUDE_FILE(*libble_app.a *libbt.a *libbtdm_app.a *libnimble.a) .bss.*)
+    *(.bss .bss.*)
     *(.dynbss .dynsbss .gnu.linkonce.b .gnu.linkonce.b.* .gnu.linkonce.sb .gnu.linkonce.sb.* .gnu.linkonce.sb2 .gnu.linkonce.sb2.* .sbss .sbss.* .sbss2 .sbss2.* .scommon .share.mem)
     *(.ext_ram.bss .ext_ram.bss.*)
-    *(EXCLUDE_FILE(*libble_app.a *libbt.a *libbtdm_app.a *libnimble.a) COMMON)
-    . = ALIGN(4);
-    _bt_controller_bss_start = ABSOLUTE(.);
-    *libble_app.a:(.bss .bss.*)
-    . = ALIGN(4);
-    _bt_controller_bss_end = ABSOLUTE(.);
-    . = ALIGN(4);
-    _bt_controller_common_start = ABSOLUTE(.);
-    *libble_app.a:(COMMON)
-    . = ALIGN(4);
-    _bt_controller_common_end = ABSOLUTE(.);
-    . = ALIGN(4);
-    _bt_bss_start = ABSOLUTE(.);
-    *libbt.a:(.bss .bss.*)
-    . = ALIGN(4);
-    _bt_bss_end = ABSOLUTE(.);
-    . = ALIGN(4);
-    _bt_common_start = ABSOLUTE(.);
-    *libbt.a:(COMMON)
-    . = ALIGN(4);
-    _bt_common_end = ABSOLUTE(.);
-    . = ALIGN(4);
-    _btdm_bss_start = ABSOLUTE(.);
-    *libbtdm_app.a:(.bss .bss.*)
-    . = ALIGN(4);
-    _btdm_bss_end = ABSOLUTE(.);
-    . = ALIGN(4);
-    _btdm_common_start = ABSOLUTE(.);
-    *libbtdm_app.a:(COMMON)
-    . = ALIGN(4);
-    _btdm_common_end = ABSOLUTE(.);
-    . = ALIGN(4);
-    _nimble_bss_start = ABSOLUTE(.);
-    *libnimble.a:(.bss .bss.*)
-    . = ALIGN(4);
-    _nimble_bss_end = ABSOLUTE(.);
-    . = ALIGN(4);
-    _nimble_common_start = ABSOLUTE(.);
-    *libnimble.a:(COMMON)
-    . = ALIGN(4);
-    _nimble_common_end = ABSOLUTE(.);
+    *(COMMON)
 
     *(.dynsbss)
     *(.sbss)
@@ -507,7 +447,7 @@ SECTIONS
     *libdriver.a:gptimer.*(.text .text.gptimer_del_timer .text.gptimer_destroy .text.gptimer_disable .text.gptimer_enable .text.gptimer_get_captured_count .text.gptimer_get_raw_count .text.gptimer_get_resolution .text.gptimer_new_timer .text.gptimer_register_event_callbacks .text.gptimer_release_group_handle .text.gptimer_set_alarm_action .text.gptimer_set_raw_count .text.gptimer_start .text.gptimer_stop)
     *libesp_event.a:default_event_loop.*(.text .text.esp_event_handler_instance_register .text.esp_event_handler_instance_unregister .text.esp_event_handler_register .text.esp_event_handler_unregister .text.esp_event_loop_create_default .text.esp_event_loop_delete_default .text.esp_event_post)
     *libesp_event.a:esp_event.*(.text .text.base_node_add_handler .text.esp_event_dump .text.esp_event_handler_instance_register_with .text.esp_event_handler_instance_unregister_with .text.esp_event_handler_register_with .text.esp_event_handler_register_with_internal .text.esp_event_handler_unregister_with .text.esp_event_handler_unregister_with_internal .text.esp_event_loop_create .text.esp_event_loop_delete .text.esp_event_loop_run .text.esp_event_loop_run_task .text.esp_event_post_to .text.handler_instances_add .text.handler_instances_remove .text.handler_instances_remove_all .text.loop_node_add_handler)
-    *libesp_hw_support.a:cpu.*(.text .text.esp_cpu_clear_breakpoint .text.esp_cpu_clear_watchpoint .text.esp_cpu_intr_get_desc .text.esp_cpu_set_breakpoint .text.esp_cpu_set_watchpoint .text.semihosting_call_noerrno)
+    *libesp_hw_support.a:cpu.*(.text .text.esp_cpu_clear_breakpoint .text.esp_cpu_clear_watchpoint .text.esp_cpu_set_breakpoint .text.esp_cpu_set_watchpoint)
     *libesp_hw_support.a:esp_gpio_reserve.*(.text)
     *libesp_hw_support.a:sar_periph_ctrl.*(.text .text.s_sar_power_acquire .text.s_sar_power_release .text.sar_periph_ctrl_adc_continuous_power_acquire .text.sar_periph_ctrl_adc_continuous_power_release .text.sar_periph_ctrl_adc_oneshot_power_acquire .text.sar_periph_ctrl_adc_oneshot_power_release .text.sar_periph_ctrl_init .text.sar_periph_ctrl_power_disable .text.sar_periph_ctrl_pwdet_power_acquire .text.sar_periph_ctrl_pwdet_power_release)
     *libesp_system.a:esp_system_chip.*(.text .text.esp_get_free_heap_size .text.esp_get_free_internal_heap_size .text.esp_get_idf_version .text.esp_get_minimum_free_heap_size)
@@ -517,8 +457,8 @@ SECTIONS
     *libheap.a:multi_heap.*(.text)
     *libheap.a:multi_heap_poisoning.*(.text .text.multi_heap_free_size .text.multi_heap_get_info .text.multi_heap_minimum_free_size .text.multi_heap_register)
     *libieee802154.a:esp_ieee802154_ack.*(.text .text.ieee802154_add_pending_addr .text.ieee802154_clear_pending_addr .text.ieee802154_reset_pending_table)
-    *libieee802154.a:esp_ieee802154_dev.*(.text .text.ieee802154_cca .text.ieee802154_disable .text.ieee802154_enable .text.ieee802154_energy_detect .text.ieee802154_get_recent_lqi .text.ieee802154_get_recent_rssi .text.ieee802154_get_state .text.ieee802154_mac_deinit .text.ieee802154_mac_init .text.ieee802154_receive .text.ieee802154_receive_at .text.ieee802154_receive_done .text.ieee802154_receive_handle_done .text.ieee802154_sleep .text.ieee802154_transmit .text.ieee802154_transmit_at .text.ieee802154_transmit_done .text.ieee802154_transmit_internal .text.set_next_rx_buffer .text.stop_current_operation.isra.0 .text.stop_tx.isra.0 .text.tx_init)
-    *libieee802154.a:esp_ieee802154_frame.*(.text .text.ieee802154_frame_address_offset .text.ieee802154_frame_get_dest_panid .text.ieee802154_frame_get_dst_addr .text.ieee802154_frame_get_src_panid .text.ieee802154_frame_get_type .text.ieee802154_frame_get_version .text.ieee802154_frame_is_ack_required)
+    *libieee802154.a:esp_ieee802154_dev.*(.text .text.ieee802154_cca .text.ieee802154_disable .text.ieee802154_enable .text.ieee802154_energy_detect .text.ieee802154_get_recent_lqi .text.ieee802154_get_recent_rssi .text.ieee802154_get_state .text.ieee802154_mac_deinit .text.ieee802154_mac_init .text.ieee802154_receive .text.ieee802154_receive_at .text.ieee802154_receive_handle_done .text.ieee802154_sleep .text.ieee802154_sleep_retention_init .text.ieee802154_transmit .text.ieee802154_transmit_at .text.set_next_rx_buffer .text.stop_current_operation.isra.0 .text.stop_tx.isra.0)
+    *libieee802154.a:esp_ieee802154_frame.*(.text .text.ieee802154_frame_get_dest_panid .text.ieee802154_frame_get_dst_addr .text.ieee802154_frame_get_src_panid .text.ieee802154_frame_get_type .text.ieee802154_frame_get_version .text.ieee802154_frame_is_ack_required)
     *libieee802154.a:esp_ieee802154_pib.*(.text .text.ieee802154_pib_get_auto_ack_rx .text.ieee802154_pib_get_auto_ack_tx .text.ieee802154_pib_get_cca_mode .text.ieee802154_pib_get_cca_threshold .text.ieee802154_pib_get_channel .text.ieee802154_pib_get_coordinator .text.ieee802154_pib_get_enhance_ack_tx .text.ieee802154_pib_get_power .text.ieee802154_pib_get_promiscuous .text.ieee802154_pib_init .text.ieee802154_pib_is_pending .text.ieee802154_pib_set_auto_ack_rx .text.ieee802154_pib_set_auto_ack_tx .text.ieee802154_pib_set_cca_mode .text.ieee802154_pib_set_cca_threshold .text.ieee802154_pib_set_channel .text.ieee802154_pib_set_coordinator .text.ieee802154_pib_set_enhance_ack_tx .text.ieee802154_pib_set_pending_mode .text.ieee802154_pib_set_power .text.ieee802154_pib_set_promiscuous .text.ieee802154_pib_set_rx_when_idle .text.ieee802154_pib_update)
     *libieee802154.a:esp_ieee802154_sec.*(.text)
     *libieee802154.a:esp_ieee802154_timer.*(.text .text.ieee802154_timer0_get_value .text.ieee802154_timer1_get_value)

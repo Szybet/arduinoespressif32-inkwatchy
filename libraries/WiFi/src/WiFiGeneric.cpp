@@ -639,7 +639,11 @@ bool WiFiGenericClass::setTxPower(wifi_power_t power) {
     log_w("Neither AP or STA has been started");
     return false;
   }
-  return esp_wifi_set_max_tx_power(power) == ESP_OK;
+  esp_err_t err = esp_wifi_set_max_tx_power(power);
+  if (err != ESP_OK) {
+    log_e("Failed to set TX Power: 0x%x: %s", err, esp_err_to_name(err));
+  }
+  return err == ESP_OK;
 }
 
 wifi_power_t WiFiGenericClass::getTxPower() {
@@ -648,7 +652,9 @@ wifi_power_t WiFiGenericClass::getTxPower() {
     log_w("Neither AP or STA has been started");
     return WIFI_POWER_19_5dBm;
   }
-  if (esp_wifi_get_max_tx_power(&power)) {
+  esp_err_t err = esp_wifi_get_max_tx_power(&power);
+  if (err != ESP_OK) {
+    log_e("Failed to get TX Power: 0x%x: %s", err, esp_err_to_name(err));
     return WIFI_POWER_19_5dBm;
   }
   return (wifi_power_t)power;
@@ -664,7 +670,7 @@ wifi_power_t WiFiGenericClass::getTxPower() {
  */
 bool WiFiGenericClass::initiateFTM(uint8_t frm_count, uint16_t burst_period, uint8_t channel, const uint8_t *mac) {
   wifi_ftm_initiator_cfg_t ftmi_cfg = {
-    .resp_mac = {0, 0, 0, 0, 0, 0}, .channel = channel, .frm_count = frm_count, .burst_period = burst_period
+    .resp_mac = {0, 0, 0, 0, 0, 0}, .channel = channel, .frm_count = frm_count, .burst_period = burst_period, .use_get_report_api = true
   };
   if (mac != NULL) {
     memcpy(ftmi_cfg.resp_mac, mac, 6);
